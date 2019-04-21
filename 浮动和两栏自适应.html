@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .dv1{
+            width: 100%;
+            height: 100px;
+            background-color:pink;
+        }
+        /* .dv2{
+            overflow: hidden;    
+        } */
+        .child{
+            width: 500px;
+            height: 80px;
+            background-color:red;
+            float: left;
+        }
+        .second {
+            width: 500px;
+            height: 80px;
+            background-color: green;
+            float:right;
+        }
+        .clearFix::before,
+        .clearFix::after {
+            content: "";
+            display:block;
+            height: 0;
+            line-height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        .clearFix {
+            *zoom: 1;
+        }   
+        /* 
+            清除浮动:
+            1.空标签清浮动:在最后一个浮动元素后面添加一个空标签如:<p class="clera"></p>,设置属性：
+              .clear {
+                  clear:both; //清除左右两边浮动
+                  height:0;
+              }   
+            2.br标签：浮动元素后面添加  <br class="all">  br自带的属性，不到万不得已，勿使用
+            ，给页面添加不必要的结构
+            3. BFC 给父元素添加overflow: hidden/auto ；
+            4.给父元素设置高度或者设置display:table
+            5.伪元素清除浮动:
+            .clearFix::before,
+            .clearFix::after{
+                content: "";
+                display: block;
+                visibility: hidden;
+                height: 0;
+                line-height: 0;
+                clear: both;
+            }
+            .clearFix { 
+                *zoom:1; 
+                }
+        */
+
+        /*两栏自适应 */
+        #container {
+            width: 100%;
+            height: 600px;
+        }
+        #container #dv1{
+            float: left;
+            width: 100px;
+            height: 600px;
+            background-color: pink;
+        }
+        #container #dv2 {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- 浮动小结 -->
+    <div style="display:none">
+        <div class="dv2 clearFix">
+            <div class="child"></div>
+            <div class="second"></div>
+        </div>
+        <div class="dv1"></div>
+    </div>
+
+    <!-- 两栏自适应 -->
+    <div id="container">
+        <div id="dv1"></div>
+        <div id="dv2">为父元素设置高度，至少可以保证父元素级别的内容可以正常显示，但是有两个问题：
+        ①父元素固定高度，而内部子元素的高度可能是动态的，这样会导致出现滚动条
+        ②浮动元素的兄弟元素位置的显示可能还是不正常。
+        为父元素设置高度，原理与上面的类似，只是在第一个的基础上添加了浮动
+        为浮动元素后面添加空的div，然后设置空div清除浮动，会导致代码冗余，当页面浮动元素较多时，HTML代码中会有很多空div，显得很low。
+        与第三个相似，只是div标签换为了br标签。
+        为父元素设置zoom属性，同时设置overflow：hidden，会导致当子元素的内容为动态的时候，内容可能会被隐藏，且不能配合position：relative仪器使用。
+        与overflow：hidden相比，overflow：hidden的问题是可能会出现滚动条。
+        为父元素设置display：table，个人感觉会出现未知的问题。
+        为父元素设置zoom属性，并配合伪类一起使用时，浏览兼容性好，但问题是必须两个配合使用。</div>
+    </div>
+
+</body>
+</html>
+
