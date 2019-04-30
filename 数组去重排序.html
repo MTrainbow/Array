@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>background</title>
+    <style>
+        body {
+            background-color: #fff;
+        }
+        .dv1 {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc
+        }
+        .child {
+            height: 100px;
+            background-color:pink;
+        }
+        .dv2 {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        img {
+            width: 500px;
+        }
+        .dv3 {
+            width: 200px;
+            height: 200px;
+            background-color: purple;
+        }
+    </style>
+</head>
+<body>
+   <div class="dv1">
+       <div class="child"></div>
+   </div>
+   <div class="dv2"></div>
+   <img src="./images/23_iso100_14mm.jpg" alt="">
+   <div class="dv3"></div>
+    
+
+
+
+<script type="text/html">
+    img和background-image:
+        1.<img src="图片来源" alt="图片无法显示时显示图片说明性文字" style="设置样式属性" />,虽不是
+        块级元素，但可以设置width和heigth(站位),设置一个一个，另一个自适应，同时设置图片可能变形
+        2.background-image是CSS一个属性,不占位,配合bgc-repeat/size/position等使用,所在的父元素必须
+        指定heigth,不然显示不出来,可以不设置width，继承父类的width
+        3.差异：img是html标签，占位，background-image是CSS样式，不占位
+                img是document对象可以操作(比如：从document对象中删除)，background-image是不能操作的
+                img标签点击会选中或放大图片，background-image则不会
+                IMG是内容性,background是修饰性 
+        4.加载问题:img是内容性的，背景图是修饰性的)
+        5.加载失败显示问题        
+                背景图片在加载失败或路径找不到时，不会显示图片标记，
+                img标签在加载失败或找不到路径时，会显示一个撕裂的小图标标记
+        6.数据图与非数据图
+                所谓数据图就是从后台获取的图片，一般就用img标签显示，其他的图片一般就作为背景图展示
+        7.何时使用img,何时使用背景图
+                1》使用img
+                    作为html结构内容的一部分
+                    展示从后台传过来的数据
+                    对图片进行缩放操作
+                    利于搜索引擎搜索时
+                    有明确的语义化要求
+                    图片作为页面的组成部分而不是修饰部分
+                    显示图片只给定宽或高且不能截断图片，并且保证图片宽高比
+                2》使用背景图
+                    不是html结构的一部分
+                    图像代替文本使用时
+                    缩短下载时间时
+                    为不同的屏幕分辨率展示不同的图像时(media查询时使用背景图)
+                    作为背景图片
+                    禁止用户保存图片(点击鼠标右键另存为操作)
+                    允许图片拉伸，平铺，截取等情况
+        注意:   background-size:100% 100%;按容器 比例撑满，图片会变形
+                background-size:cover;把背景图片放大到适合元素容器的尺寸，图片比例不变                            
+</script>
+<script>
+        // 2个数组去重排序
+        Array.prototype.distinct = function (a,b,sequence) {
+           if (a.length === b.length) {
+               a.push.apply(a,b)
+           } else{
+               a.length > b.length ? a.push.apply(a,b) : b.push.apply(b,a)
+           }
+           var arr = a.length > b.length ? a : b
+           var result = []
+           arr.forEach(function (v,i,arr) {
+               var bool = arr.indexOf(v,i+1)
+               if (bool === -1) {
+                   result.push(v)
+               }
+           }) 
+           return result.sort(function (a,b) {
+               return a-b 
+           }).reverse()
+        }
+        console.log([].distinct([1,2,3,4,5],[4,5,2,1,7,8,9],null))
+
+        // 多个数组合并去重排序
+        var mergeRemove = function(params) {
+            var arr = [].slice.call(arguments); //维数组(二维)==>数组
+            var result = []
+            var newArr = []
+            for(var i=0;i<arr.length;i++){
+                for(var k=0;k<arr[i].length;k++){
+                    newArr.push((arr[i])[k])
+                }
+            }
+            newArr.forEach(function (v, i, arr) {
+                var bool = arr.indexOf(v, i + 1)
+                if (bool === -1) {
+                    result.push(v)
+                }
+            })
+            return result.sort(function (a, b) {
+                return a - b
+            }).reverse()    
+
+            //与结果无关，但有知识点
+            arr.forEach(function (v,i,arr) {
+                console.log("数组"+'='+v)
+                console.log("下标" + '=' + i)
+                console.log("arguments" + '=' + arr)
+                console.log(arr)
+            })
+        }
+        console.log(mergeRemove([1,2,3],[4,5,6],[1,5,3],[1,5,8,6,2,3]))
+</script>
+</body>
+</html>
